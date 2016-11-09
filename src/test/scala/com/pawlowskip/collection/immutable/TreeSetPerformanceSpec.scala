@@ -39,6 +39,12 @@ class TreeSetPerformanceSpec extends AverageTimeBench {
       }
     }
 
+    measure method "foreach" in {
+      using(treeSetGenOfSizes(expSizes, randomInt())) config runTimes(2000) in { tree =>
+        tree.foreach(i => 2 * 2)
+      }
+    }
+
     measure method "iterator" in {
       using(treeSetGenOfSizes(expSizes, randomInt())) config runTimes(2000) in { tree =>
         val it = tree.iterator
