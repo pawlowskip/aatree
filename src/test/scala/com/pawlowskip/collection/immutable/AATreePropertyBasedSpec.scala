@@ -70,4 +70,30 @@ class AATreePropertyBasedSpec extends FlatSpec with PropertyChecks {
     }
   }
 
+  "An AATree" should "return successor for specified elem" in {
+    forAll(Gen.listOf(numbersGen)) { elems: List[Int] =>
+      val tree = AATree.apply(elems)
+      val sortedElems = elems.distinct.sorted.toVector
+      sortedElems.zipWithIndex.forall{ case (elem, index) =>
+        if (index + 1 < sortedElems.length)
+          tree.successor(elem).get == sortedElems(index + 1)
+        else
+          tree.successor(elem).isEmpty
+      }
+    }
+  }
+
+  "An AATree" should "return predecessor for specified elem" in {
+    forAll(Gen.listOf(numbersGen)) { elems: List[Int] =>
+      val tree = AATree.apply(elems)
+      val sortedElems = elems.distinct.sorted.toVector
+      sortedElems.zipWithIndex.forall{ case (elem, index) =>
+        if (index - 1 > 0)
+          tree.predecessor(elem).get == sortedElems(index - 1)
+        else
+          tree.predecessor(elem).isEmpty
+      }
+    }
+  }
+
 }

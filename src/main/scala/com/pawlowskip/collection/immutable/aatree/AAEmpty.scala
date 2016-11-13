@@ -31,4 +31,8 @@ private[aatree] object AAEmpty extends AbstractAATree[Nothing] {
 
   @inline override def iterator: Iterator[Nothing] = Iterator.empty
 
+  override def successor[B >: Nothing](elem: B)(implicit ordering: Ordering[B]): Option[B] = None
+
+  override def predecessor[B >: Nothing](elem: B)(implicit ordering: Ordering[B]): Option[B] = None
+
 }

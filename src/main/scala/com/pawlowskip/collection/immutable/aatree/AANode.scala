@@ -129,6 +129,40 @@ private[aatree] final class AANode[+A](
     if (right.isNotEmpty) right.foreach(f)
   }
 
+  override def successor[B >: A](elem: B)(implicit ordering: Ordering[B]): Option[B] = {
+    @tailrec
+    def loop(tree: AbstractAATree[B], currentSuccessor: Option[B]): Option[B] = {
+      if (tree.isEmpty) currentSuccessor
+      else {
+        val cmp = ordering.compare(elem, tree.value)
+        if (cmp == 0) {
+          if (tree.right.isNotEmpty) tree.right.min
+          else currentSuccessor
+        }
+        else if (cmp < 0) loop(tree.left, Some(tree.value))
+        else loop(tree.right, currentSuccessor)
+      }
+    }
+    loop(this, None)
+  }
+
+  override def predecessor[B >: A](elem: B)(implicit ordering: Ordering[B]): Option[B] = {
+    @tailrec
+    def loop(tree: AbstractAATree[B], currentPredecessor: Option[B]): Option[B] = {
+      if (tree.isEmpty) currentPredecessor
+      else {
+        val cmp = ordering.compare(elem, tree.value)
+        if (cmp == 0) {
+          if (tree.left.isNotEmpty) tree.left.max
+          else currentPredecessor
+        }
+        else if (cmp < 0) loop(tree.left, currentPredecessor)
+        else loop(tree.right, Some(tree.value))
+      }
+    }
+    loop(this, None)
+  }
+
 }
 
 private[aatree] class NodeIterator[A](private var tree: AbstractAATree[A]) extends Iterator[A] {

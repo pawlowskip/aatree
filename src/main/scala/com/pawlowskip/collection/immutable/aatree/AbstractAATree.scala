@@ -33,6 +33,10 @@ private[aatree] abstract class AbstractAATree[+A] extends Iterable[A] with Seria
 
   def contains[B >: A](elem: B)(implicit ordering: Ordering[B]): Boolean
 
+  def successor[B >: A](elem: B)(implicit ordering: Ordering[B]): Option[B]
+
+  def predecessor[B >: A](elem: B)(implicit ordering: Ordering[B]): Option[B]
+
   private[aatree]  def balance[B >: A]: AbstractAATree[B]
 
   private[aatree] def skew: AbstractAATree[A]

@@ -9,6 +9,8 @@ trait AATree[A] extends SortedSetLike[A, AATree[A]] with SortedSet[A] {
   def remove(elem: A): AATree[A]
   def min: Option[A]
   def max: Option[A]
+  def successor(elem: A): Option[A]
+  def predecessor(elem: A): Option[A]
   override def empty: AATree[A] = AATree.empty
   override def newBuilder: mutable.Builder[A, AATree[A]] = AATree.newBuilder
 }
@@ -72,6 +74,10 @@ object AATree extends ImmutableSortedSetFactory[AATree] {
     override def rangeImpl(from: Option[A], until: Option[A]): AATree[A] = ???
 
     override def keysIteratorFrom(start: A): Iterator[A] = ???
+
+    override def successor(elem: A): Option[A] = tree.successor(elem)
+
+    override def predecessor(elem: A): Option[A] = tree.predecessor(elem)
   }
 
 }
