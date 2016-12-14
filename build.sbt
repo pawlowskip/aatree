@@ -1,6 +1,8 @@
 name := "aatree"
 
-version := "1.0"
+version := "1.0.2"
+
+organization := "com.pp"
 
 scalaVersion := "2.11.8"
 

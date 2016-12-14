@@ -7,7 +7,7 @@ import org.scalatest.Matchers._
 class AATreeSpec extends FlatSpec {
 
   "An AATree" should "properly insert one number and contains it" in {
-    val tree = AATree(1)
+    val tree = AATree.empty[Int] + 1
     assert(tree.contains(1))
   }
 
@@ -59,6 +59,11 @@ class AATreeSpec extends FlatSpec {
     val tree = AATree.empty[Int].insert(-100).insert(1).insert(10).insert(-19).insert(100)
     val elems = tree.iterator.toList
     assert(List(-100, 1, 10, -19, 100).forall(elem => elems.contains(elem)))
+  }
+
+  "An AATree" should "return ascending iterator with one elem" in {
+    val tree = AATree.empty[Int].insert(0)
+    tree.iterator.toList should equal (List(0))
   }
 
   "An AATree" should "return ascending iterator" in {

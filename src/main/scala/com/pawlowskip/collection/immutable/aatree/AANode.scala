@@ -121,7 +121,9 @@ private[aatree] final class AANode[+A](
     else true
   }
 
-  override def iterator: Iterator[A] = new NodeIterator[A](this)
+  override def iterator: Iterator[A] =
+    if (left.isEmpty && right.isEmpty) Iterator.apply(value)
+    else new NodeIterator[A](this)
 
   override def foreach[U](f: (A) => U): Unit = {
     if (left.isNotEmpty) left.foreach(f)
@@ -203,5 +205,4 @@ private[aatree] class NodeIterator[A](private var tree: AbstractAATree[A]) exten
       next()
     }
   }
-
 }
